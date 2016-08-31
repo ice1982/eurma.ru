@@ -1,0 +1,707 @@
+<html>
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+		<title>CakeMODx documentation</title>
+		<style type="text/css">
+			body{ margin:10px 5%; padding:20px; font-family:arial; background-color:#F7F4E3; }
+			#content{ border:3px solid #CCC; color:#323232; padding:10px; padding-bottom:30px; background-color:#FFF; }
+			#cr{ font-size:0.6em; text-align:right; }
+			h2 { color: #555; border-bottom:2px solid #AAA; padding-bottom:10px; }
+			.title { color: #836785; font-weight:bold; }
+		</style>
+	</head>
+	<body>
+		<div id="content">
+			<h2>CakeMODx documentation</h2>
+			<br />
+			<code>
+			<span style="color: #FF8000">/**
+			<br />&nbsp;*&nbsp;Some&nbsp;different&nbsp;MODx&nbsp;Evolution&nbsp;APIs&nbsp;for&nbsp;easier&nbsp;actions.
+			<br />&nbsp;*&nbsp;
+			<br />&nbsp;*&nbsp;@version&nbsp;1.3&nbsp;beta
+			<br />&nbsp;*&nbsp;@author&nbsp;Amir&nbsp;Hossein&nbsp;Hodjati&nbsp;Pour&nbsp;(AHHP)&nbsp;&lt;Boplo.ir&gt;
+			<br />&nbsp;*&nbsp;@date&nbsp;2009/07/09
+			<br />&nbsp;*&nbsp;@license&nbsp;GPL&nbsp;
+			<br />&nbsp;*&nbsp;@desc&nbsp;The class logs error messages in <i>errorlog.html</i>.&nbsp;
+			<br />&nbsp;*&nbsp;&nbsp;
+			<br />&nbsp;*&nbsp;<span style="color: #FF5500">THIS&nbsp;CLASS&nbsp;IS&nbsp;IN&nbsp;DEVELOPMENT&nbsp;SO&nbsp;THERE&nbsp;IS&nbsp;NO&nbsp;WARRANTY&nbsp;FOR&nbsp;MISSING&nbsp;DATA.</span>
+			<br />&nbsp;*&nbsp;<span style="color: #FF5500">CODES&nbsp;ARE&nbsp;CLEAN&nbsp;AND&nbsp;DOCUMENTAED&nbsp;SO&nbsp;AUTHOR&nbsp;(AHHP)&nbsp;IS&nbsp;NOT&nbsp;RESPONSIBLE&nbsp;FOR&nbsp;ANY&nbsp;ISSUE!</span><span style="color: #FF8000">
+			<br />&nbsp;*/
+			<br />&nbsp;
+			<br /></span><span style="color: #007700">class&nbsp;</span><span style="color: #0000BB">CakeMODx&nbsp;</span><span style="color: #007700">{
+			<br /> 
+			<br />&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #FF8000">/**
+			<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*&nbsp;DBAPI&nbsp;object
+			<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*&nbsp;@var&nbsp;object
+			<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*/
+			<br />&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #007700">var&nbsp;</span><span style="color: #0000BB">$db</span><span style="color: #007700">;
+			<br />&nbsp;&nbsp;&nbsp;&nbsp;
+			<br />&nbsp;&nbsp;&nbsp;&nbsp;
+			<br />&nbsp;&nbsp;&nbsp;&nbsp;
+			<br />&nbsp;&nbsp;&nbsp;&nbsp;
+			<br />&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #FF8000">/**
+			<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*&nbsp;The&nbsp;CakeMODx&nbsp;Constructor.
+			<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*
+			<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*&nbsp;This&nbsp;method&nbsp;sets&nbsp;class&nbsp;properties.
+			<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*
+			<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*&nbsp;@return&nbsp;void
+			<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*/
+			<br />&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #007700">function&nbsp;</span><span style="color: #0000BB">CakeMODx</span><span style="color: #007700">()
+			<br /> 
+			<br /> 
+			<br />
+			<br /> 
+			<br /></span><span class="title">/*&nbsp;DOCUMENT&nbsp;management&nbsp;methods
+			<br />=============================================================&nbsp;*/</span><span style="color: #FF8000">
+			<br />&nbsp;&nbsp;&nbsp;&nbsp;
+			<br />&nbsp;&nbsp;&nbsp;&nbsp;/**
+			<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*&nbsp;Creates&nbsp;a&nbsp;new&nbsp;MODx&nbsp;document.
+			<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*
+			<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*&nbsp;@param&nbsp;array&nbsp;$fields&nbsp;An&nbsp;associative&nbsp;array&nbsp;of&nbsp;`site_content`&nbsp;table.
+			<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*&nbsp;@return&nbsp;mixed&nbsp;ID&nbsp;of&nbsp;new&nbsp;document&nbsp;as&nbsp;integer&nbsp;on&nbsp;success&nbsp;and&nbsp;FALSE&nbsp;on&nbsp;failure.
+			<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*/
+			<br />&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #007700">function&nbsp;</span><span style="color: #0000BB">newDocument</span><span style="color: #007700">(</span><span style="color: #0000BB">$fields</span><span style="color: #007700">=array())
+			<br />&nbsp;&nbsp;&nbsp;&nbsp;
+			<br />&nbsp;&nbsp;&nbsp;&nbsp;
+			<br />&nbsp;&nbsp;&nbsp;&nbsp;
+			<br />&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #FF8000">/**
+			<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*&nbsp;Update/Edit&nbsp;a&nbsp;MODx&nbsp;document.
+			<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*
+			<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*&nbsp;@desc&nbsp;First&nbsp;and/or&nbsp;third&nbsp;parameter&nbsp;must&nbsp;be&nbsp;used.
+			<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*&nbsp;@param&nbsp;integer&nbsp;$id&nbsp;ID&nbsp;of&nbsp;document&nbsp;need&nbsp;to&nbsp;edit.
+			<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*&nbsp;@param&nbsp;array&nbsp;$update&nbsp;An&nbsp;associative&nbsp;array&nbsp;of&nbsp;`site_content`&nbsp;table.
+			<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*&nbsp;@param&nbsp;string&nbsp;$where&nbsp;A&nbsp;valid&nbsp;WHERE&nbsp;statement&nbsp;directly&nbsp;uses&nbsp;in&nbsp;SQL.
+			<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*&nbsp;@return&nbsp;mixed&nbsp;ID&nbsp;of&nbsp;edited&nbsp;document&nbsp;as&nbsp;integer&nbsp;on&nbsp;success&nbsp;and&nbsp;FALSE&nbsp;on&nbsp;failure.
+			<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*/
+			<br />&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #007700">function&nbsp;</span><span style="color: #0000BB">updateDocument</span><span style="color: #007700">(</span><span style="color: #0000BB">$id</span><span style="color: #007700">=</span><span style="color: #0000BB">0</span><span style="color: #007700">,&nbsp;</span><span style="color: #0000BB">$update</span><span style="color: #007700">=array(),&nbsp;</span><span style="color: #0000BB">$where</span><span style="color: #007700">=</span><span style="color: #DD0000">''</span><span style="color: #007700">)
+			<br />&nbsp;&nbsp;&nbsp;&nbsp;
+			<br />&nbsp;&nbsp;&nbsp;&nbsp;
+			<br />&nbsp;&nbsp;&nbsp;&nbsp;
+			<br />&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #FF8000">/**
+			<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*&nbsp;Delete&nbsp;a&nbsp;MODx&nbsp;document&nbsp;with&nbsp;all&nbsp;details.&nbsp;NO&nbsp;RECOVERY&nbsp;IS&nbsp;POSSIBLE&nbsp;AFTER&nbsp;IT!
+			<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*
+			<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*&nbsp;@desc&nbsp;First&nbsp;and/or&nbsp;second&nbsp;parameter&nbsp;must&nbsp;be&nbsp;used.
+			<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*&nbsp;@param&nbsp;integer&nbsp;$id&nbsp;ID&nbsp;of&nbsp;document&nbsp;need&nbsp;to&nbsp;delete.
+			<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*&nbsp;@param&nbsp;string&nbsp;$where&nbsp;A&nbsp;valid&nbsp;WHERE&nbsp;statement&nbsp;directly&nbsp;uses&nbsp;in&nbsp;SQL.
+			<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*&nbsp;@return&nbsp;boolean&nbsp;TRUE&nbsp;on&nbsp;success&nbsp;and&nbsp;FALSE&nbsp;on&nbsp;failure.
+			<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*/
+			<br />&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #007700">function&nbsp;</span><span style="color: #0000BB">deleteDocument</span><span style="color: #007700">(</span><span style="color: #0000BB">$id</span><span style="color: #007700">=</span><span style="color: #0000BB">0</span><span style="color: #007700">,&nbsp;</span><span style="color: #0000BB">$where</span><span style="color: #007700">=</span><span style="color: #DD0000">''</span><span style="color: #007700">)
+			<br /> 
+			<br />&nbsp;&nbsp;&nbsp;&nbsp;
+			<br />&nbsp;&nbsp;&nbsp;&nbsp;
+			<br />&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #FF8000">/**
+			<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*&nbsp;Get&nbsp;fields&nbsp;from&nbsp;`site_content`&nbsp;table&nbsp;for&nbsp;one&nbsp;or&nbsp;more&nbsp;MODx&nbsp;document.
+			<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*
+			<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*&nbsp;@desc&nbsp;First&nbsp;and/or&nbsp;third&nbsp;parameter&nbsp;must&nbsp;be&nbsp;used.
+			<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*&nbsp;@param&nbsp;integer&nbsp;$id&nbsp;ID&nbsp;of&nbsp;document.
+			<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*&nbsp;@param&nbsp;string&nbsp;$fields&nbsp;Comma&nbsp;seperated&nbsp;column&nbsp;names&nbsp;directly&nbsp;uses&nbsp;in&nbsp;SQL.
+			<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*&nbsp;@param&nbsp;string&nbsp;$where&nbsp;A&nbsp;valid&nbsp;WHERE&nbsp;statement&nbsp;directly&nbsp;uses&nbsp;in&nbsp;SQL.
+			<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*&nbsp;@return&nbsp;mixed&nbsp;array&nbsp;on&nbsp;success&nbsp;and&nbsp;FALSE&nbsp;on&nbsp;failure.
+			<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*/
+			<br />&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #007700">function&nbsp;</span><span style="color: #0000BB">getDocField</span><span style="color: #007700">(</span><span style="color: #0000BB">$id</span><span style="color: #007700">=</span><span style="color: #0000BB">0</span><span style="color: #007700">,&nbsp;</span><span style="color: #0000BB">$fields</span><span style="color: #007700">=</span><span style="color: #DD0000">'*'</span><span style="color: #007700">,&nbsp;</span><span style="color: #0000BB">$where</span><span style="color: #007700">=</span><span style="color: #DD0000">''</span><span style="color: #007700">)
+			<br />&nbsp;&nbsp;&nbsp;&nbsp;
+			<br />&nbsp;&nbsp;&nbsp;&nbsp;
+			<br />&nbsp;&nbsp;&nbsp;&nbsp;
+			<br />&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #FF8000">/**
+			<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*&nbsp;Empty&nbsp;MODx&nbsp;recycle&nbsp;bin.&nbsp;NO&nbsp;RECOVERY&nbsp;IS&nbsp;POSSIBLE&nbsp;AFTER&nbsp;IT!
+			<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*
+			<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*&nbsp;@desc&nbsp;First&nbsp;and/or&nbsp;second&nbsp;parameter&nbsp;must&nbsp;be&nbsp;used.
+			<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*&nbsp;@return&nbsp;boolean&nbsp;TRUE&nbsp;on&nbsp;success&nbsp;and&nbsp;FALSE&nbsp;on&nbsp;failure.
+			<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*/
+			<br />&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #007700">function&nbsp;</span><span style="color: #0000BB">emptyTrash</span><span style="color: #007700">()
+			<br />&nbsp;&nbsp;&nbsp;&nbsp;
+			<br />&nbsp;&nbsp;&nbsp;&nbsp;
+			<br />&nbsp;&nbsp;&nbsp;&nbsp;
+			<br />&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #FF8000">/**
+			<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*&nbsp;Get&nbsp;count&nbsp;of&nbsp;all&nbsp;sub-document&nbsp;for&nbsp;one&nbsp;or&nbsp;more&nbsp;parent&nbsp;documents.
+			<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*
+			<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*&nbsp;@desc&nbsp;First&nbsp;and/or&nbsp;second&nbsp;parameter&nbsp;must&nbsp;be&nbsp;used.
+			<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*&nbsp;@param&nbsp;integer&nbsp;$parent&nbsp;ID&nbsp;of&nbsp;parent.
+			<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*&nbsp;@param&nbsp;string&nbsp;$where&nbsp;A&nbsp;valid&nbsp;WHERE&nbsp;statement&nbsp;directly&nbsp;uses&nbsp;in&nbsp;SQL.
+			<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*&nbsp;@return&nbsp;integer&nbsp;Children&nbsp;count.
+			<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*/
+			<br />&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #007700">function&nbsp;</span><span style="color: #0000BB">getChildrenCount</span><span style="color: #007700">(</span><span style="color: #0000BB">$parent</span><span style="color: #007700">=</span><span style="color: #0000BB">0</span><span style="color: #007700">,&nbsp;</span><span style="color: #0000BB">$where</span><span style="color: #007700">=</span><span style="color: #DD0000">''</span><span style="color: #007700">)
+			<br />&nbsp;&nbsp;&nbsp;&nbsp;
+			<br />&nbsp;&nbsp;&nbsp;&nbsp;
+			<br />&nbsp;&nbsp;&nbsp;&nbsp;
+			<br />&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #FF8000">/**
+			<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*&nbsp;Get&nbsp;count&nbsp;of&nbsp;all&nbsp;documents&nbsp;of&nbsp;site.
+			<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*
+			<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*&nbsp;@param&nbsp;string&nbsp;$where&nbsp;A&nbsp;valid&nbsp;WHERE&nbsp;statement&nbsp;directly&nbsp;uses&nbsp;in&nbsp;SQL.
+			<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*&nbsp;@return&nbsp;integer&nbsp;Documents&nbsp;count.
+			<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*/
+			<br />&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #007700">function&nbsp;</span><span style="color: #0000BB">getSiteDocumentCount</span><span style="color: #007700">(</span><span style="color: #0000BB">$where</span><span style="color: #007700">=</span><span style="color: #DD0000">'published=1'</span><span style="color: #007700">)
+			<br />&nbsp;&nbsp;&nbsp;&nbsp;
+			<br />&nbsp;&nbsp;&nbsp;&nbsp;
+			<br />&nbsp;&nbsp;&nbsp;&nbsp;
+			<br />&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #FF8000">/**
+			<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*&nbsp;Print&nbsp;output&nbsp;of&nbsp;a&nbsp;document.
+			<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*
+			<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*&nbsp;@desc&nbsp;Checking&nbsp;for&nbsp;published&nbsp;,&nbsp;deleted&nbsp;and&nbsp;etc&nbsp;depends&nbsp;on&nbsp;user!
+			<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*&nbsp;@desc&nbsp;All&nbsp;MODx&nbsp;tags&nbsp;will&nbsp;be&nbsp;translated.&nbsp;Useful&nbsp;in&nbsp;AJAX.
+			<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*&nbsp;@param&nbsp;integer&nbsp;$id&nbsp;ID&nbsp;of&nbsp;document.
+			<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*&nbsp;@return&nbsp;void.
+			<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*/
+			<br />&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #007700">function&nbsp;</span><span style="color: #0000BB">getDocumentOutput</span><span style="color: #007700">(</span><span style="color: #0000BB">$id</span><span style="color: #007700">)
+			<br />&nbsp;&nbsp;&nbsp;&nbsp;
+			<br />&nbsp;&nbsp;&nbsp;&nbsp;
+			<br />&nbsp;&nbsp;&nbsp;&nbsp;
+			<br />&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #FF8000">/**
+			<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*&nbsp;Renew&nbsp;the&nbsp;site&nbsp;cache.
+			<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*
+			<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*&nbsp;@return&nbsp;void.
+			<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*/
+			<br />&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #007700">function&nbsp;</span><span style="color: #0000BB">updateCache</span><span style="color: #007700">()
+			<br /> 
+			<br /> 
+			<br /> 
+			<br /> 
+			<br /></span><span class="title">/*&nbsp;TEMPLATE&nbsp;VARIABLE&nbsp;methods
+			<br />=============================================================&nbsp;*/</span><span style="color: #FF8000">
+			<br />&nbsp;&nbsp;&nbsp;&nbsp;
+			<br />&nbsp;&nbsp;&nbsp;&nbsp;/**
+			<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*&nbsp;Set&nbsp;a&nbsp;TV&nbsp;value&nbsp;for&nbsp;a&nbsp;document.
+			<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*
+			<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*&nbsp;@param&nbsp;mixed&nbsp;$tv&nbsp;Name&nbsp;or&nbsp;ID&nbsp;of&nbsp;TV.
+			<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*&nbsp;@param&nbsp;integer&nbsp;$docId&nbsp;ID&nbsp;of&nbsp;document.
+			<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*&nbsp;@param&nbsp;string&nbsp;$value&nbsp;Value&nbsp;of&nbsp;TV.
+			<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*&nbsp;@return&nbsp;mixed&nbsp;New&nbsp;TV&nbsp;ID&nbsp;on&nbsp;success&nbsp;and&nbsp;FALSE&nbsp;on&nbsp;failure.
+			<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*/
+			<br />&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #007700">function&nbsp;</span><span style="color: #0000BB">setTV</span><span style="color: #007700">(</span><span style="color: #0000BB">$tv</span><span style="color: #007700">,&nbsp;</span><span style="color: #0000BB">$docId</span><span style="color: #007700">,&nbsp;</span><span style="color: #0000BB">$value</span><span style="color: #007700">)
+			<br />&nbsp;&nbsp;&nbsp;&nbsp;
+			<br />&nbsp;&nbsp;&nbsp;&nbsp;
+			<br />&nbsp;&nbsp;&nbsp;&nbsp;
+			<br />&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #FF8000">/**
+			<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*&nbsp;Get&nbsp;value&nbsp;of&nbsp;a&nbsp;TV.
+			<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*
+			<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*&nbsp;@param&nbsp;integer&nbsp;$docId&nbsp;ID&nbsp;of&nbsp;document.
+			<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*&nbsp;@param&nbsp;mixed&nbsp;&nbsp;$tvNames&nbsp;Names&nbsp;of&nbsp;TVs&nbsp;as&nbsp;array,&nbsp;single&nbsp;name&nbsp;as&nbsp;string.&nbsp;Leave&nbsp;it&nbsp;empty&nbsp;for&nbsp;all&nbsp;TVs.
+			<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*&nbsp;@return&nbsp;array&nbsp;An&nbsp;associative&nbsp;array,&nbsp;Key&nbsp;is&nbsp;TV&nbsp;name&nbsp;and&nbsp;value&nbsp;is&nbsp;TV&nbsp;value.
+			<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*/
+			<br />&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #007700">function&nbsp;</span><span style="color: #0000BB">getTV</span><span style="color: #007700">(</span><span style="color: #0000BB">$docId</span><span style="color: #007700">,&nbsp;</span><span style="color: #0000BB">$tvNames</span><span style="color: #007700">=</span><span style="color: #0000BB">null</span><span style="color: #007700">)
+			<br />&nbsp;&nbsp;&nbsp;&nbsp;
+			<br />&nbsp;&nbsp;&nbsp;&nbsp;
+			<br />&nbsp;&nbsp;&nbsp;&nbsp;
+			<br />&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #FF8000">/**
+			<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*&nbsp;Delete&nbsp;a&nbsp;TV&nbsp;value&nbsp;of&nbsp;one&nbsp;or&nbsp;more&nbsp;documents.
+			<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*
+			<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*&nbsp;@desc&nbsp;Use&nbsp;it&nbsp;for&nbsp;delete&nbsp;a&nbsp;TV&nbsp;value&nbsp;for&nbsp;a&nbsp;number&nbsp;of&nbsp;documents.
+			<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*&nbsp;@param&nbsp;string&nbsp;$tv&nbsp;TV&nbsp;name.
+			<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*&nbsp;@param&nbsp;mixed&nbsp;$docIds&nbsp;Array&nbsp;contains&nbsp;document&nbsp;IDs&nbsp;or&nbsp;integer&nbsp;for&nbsp;a&nbsp;single&nbsp;ID.&nbsp;
+			<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*&nbsp;@return&nbsp;boolean&nbsp;TRUE&nbsp;on&nbsp;success&nbsp;and&nbsp;FALSE&nbsp;on&nbsp;failure.
+			<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*/
+			<br />&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #007700">function&nbsp;</span><span style="color: #0000BB">unsetTV</span><span style="color: #007700">(</span><span style="color: #0000BB">$tv</span><span style="color: #007700">,&nbsp;</span><span style="color: #0000BB">$docIds</span><span style="color: #007700">=array())
+			<br />&nbsp;&nbsp;&nbsp;&nbsp;
+			<br />&nbsp;&nbsp;&nbsp;&nbsp;
+			<br />&nbsp;&nbsp;&nbsp;&nbsp;
+			<br />&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #FF8000">/**
+			<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*&nbsp;Update/Edit&nbsp;a&nbsp;TV&nbsp;value.
+			<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*
+			<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*&nbsp;@param&nbsp;mixed&nbsp;$tv&nbsp;Name&nbsp;of&nbsp;ID&nbsp;of&nbsp;TV.
+			<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*&nbsp;@param&nbsp;integer&nbsp;$docId&nbsp;ID&nbsp;of&nbsp;document.
+			<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*&nbsp;@param&nbsp;string&nbsp;$value&nbsp;Value&nbsp;of&nbsp;TV.
+			<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*&nbsp;@return&nbsp;mixed&nbsp;New&nbsp;TV&nbsp;ID&nbsp;on&nbsp;success&nbsp;and&nbsp;FALSE&nbsp;on&nbsp;failure.
+			<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*/
+			<br />&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #007700">function&nbsp;</span><span style="color: #0000BB">updateTV</span><span style="color: #007700">(</span><span style="color: #0000BB">$tv</span><span style="color: #007700">,&nbsp;</span><span style="color: #0000BB">$docId</span><span style="color: #007700">,&nbsp;</span><span style="color: #0000BB">$value</span><span style="color: #007700">)
+			<br /> 
+			<br /> 
+			<br /> 
+			<br /> 
+			<br /></span><span class="title">/*&nbsp;WEB&nbsp;USER&nbsp;methods
+			<br />=============================================================&nbsp;*/</span><span style="color: #FF8000">
+			<br /> 
+			<br />&nbsp;&nbsp;&nbsp;&nbsp;/**
+			<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*&nbsp;Create&nbsp;new&nbsp;web&nbsp;user.
+			<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*
+			<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*&nbsp;@param&nbsp;string&nbsp;$user&nbsp;Username.
+			<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*&nbsp;@param&nbsp;string&nbsp;$pass&nbsp;Password.&nbsp;Method&nbsp;encodes&nbsp;parameter&nbsp;by&nbsp;MD5()&nbsp;function!
+			<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*&nbsp;@param&nbsp;array&nbsp;$attributes&nbsp;An&nbsp;associative&nbsp;array&nbsp;for&nbsp;`web_user_attributes`&nbsp;table.&nbsp;Key&nbsp;is&nbsp;column&nbsp;name&nbsp;and&nbsp;value&nbsp;is&nbsp;column&nbsp;value.
+			<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*&nbsp;@param&nbsp;array&nbsp;$customTable&nbsp;An&nbsp;associative&nbsp;array&nbsp;for&nbsp;other&nbsp;custom&nbsp;tables.
+			<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*&nbsp;Key&nbsp;is&nbsp;table&nbsp;name&nbsp;(without&nbsp;prefix)&nbsp;and&nbsp;value&nbsp;is&nbsp;another&nbsp;associative&nbsp;array,&nbsp;Key&nbsp;is&nbsp;column&nbsp;name&nbsp;and&nbsp;value&nbsp;is&nbsp;column&nbsp;value.
+			<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*&nbsp;The&nbsp;user&nbsp;ID&nbsp;will&nbsp;be&nbsp;put&nbsp;in&nbsp;all&nbsp;other&nbsp;tables&nbsp;in&nbsp;`internalKey`&nbsp;column.&nbsp;example:
+			<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*&nbsp;&lt;code&gt;
+			<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*&nbsp;&nbsp;&nbsp;&nbsp;$customTable&nbsp;=&nbsp;array(
+			<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"table1"&nbsp;=&gt;&nbsp;array(
+			<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"col1-1"&nbsp;=&gt;&nbsp;"val1-1",
+			<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"col1-2"&nbsp;=&gt;&nbsp;"val1-2"
+			<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;),
+			<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"table2"&nbsp;=&gt;&nbsp;array(
+			<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"col2-1"&nbsp;=&gt;&nbsp;"val2-1",
+			<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"col2-2"&nbsp;=&gt;&nbsp;"val2-2"
+			<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;)
+			<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*&nbsp;&nbsp;&nbsp;&nbsp;);
+			<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*&nbsp;&lt;/code&gt;
+			<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*&nbsp;@param&nbsp;string&nbsp;$cachepwd&nbsp;`cachepwd`&nbsp;column&nbsp;value&nbsp;in&nbsp;`web_users`&nbsp;table.
+			<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*&nbsp;@return&nbsp;mixed&nbsp;User&nbsp;ID&nbsp;on&nbsp;success&nbsp;and&nbsp;FALSE&nbsp;on&nbsp;failure.
+			<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*/
+			<br />&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #007700">function&nbsp;</span><span style="color: #0000BB">newUser</span><span style="color: #007700">(</span><span style="color: #0000BB">$user</span><span style="color: #007700">,&nbsp;</span><span style="color: #0000BB">$pass</span><span style="color: #007700">,&nbsp;</span><span style="color: #0000BB">$attributes</span><span style="color: #007700">=</span><span style="color: #0000BB">null</span><span style="color: #007700">,&nbsp;</span><span style="color: #0000BB">$customTable</span><span style="color: #007700">=</span><span style="color: #0000BB">null</span><span style="color: #007700">,&nbsp;</span><span style="color: #0000BB">$cachepwd</span><span style="color: #007700">=</span><span style="color: #0000BB">null</span><span style="color: #007700">)
+			<br />&nbsp;&nbsp;&nbsp;&nbsp;
+			<br />&nbsp;&nbsp;&nbsp;&nbsp;
+			<br />&nbsp;&nbsp;&nbsp;&nbsp;
+			<br />&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #FF8000">/**
+			<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*&nbsp;Update/Edit&nbsp;profile&nbsp;for&nbsp;one/more&nbsp;user(s).
+			<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*
+			<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*&nbsp;@desc&nbsp;First&nbsp;and/or&nbsp;fourth&nbsp;parameter&nbsp;must&nbsp;be&nbsp;used.
+			<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*&nbsp;@param&nbsp;integer&nbsp;$id&nbsp;ID&nbsp;of&nbsp;user.
+			<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*&nbsp;@param&nbsp;string&nbsp;$table&nbsp;Name&nbsp;of&nbsp;table&nbsp;needs&nbsp;to&nbsp;be&nbsp;updated.
+			<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*&nbsp;@param&nbsp;array&nbsp;$update&nbsp;An&nbsp;associative&nbsp;array,&nbsp;Key&nbsp;is&nbsp;column&nbsp;name&nbsp;and&nbsp;value&nbsp;is&nbsp;column&nbsp;value.
+			<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*&nbsp;@param&nbsp;string&nbsp;$where&nbsp;A&nbsp;valid&nbsp;WHERE&nbsp;statement&nbsp;directly&nbsp;uses&nbsp;in&nbsp;SQL.
+			<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*&nbsp;@return&nbsp;void.
+			<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*/
+			<br />&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #007700">function&nbsp;</span><span style="color: #0000BB">updateUserProfile</span><span style="color: #007700">(</span><span style="color: #0000BB">$id</span><span style="color: #007700">=</span><span style="color: #0000BB">0</span><span style="color: #007700">,&nbsp;</span><span style="color: #0000BB">$table</span><span style="color: #007700">,&nbsp;</span><span style="color: #0000BB">$update</span><span style="color: #007700">=array(),&nbsp;</span><span style="color: #0000BB">$where</span><span style="color: #007700">=</span><span style="color: #DD0000">''</span><span style="color: #007700">)
+			<br />&nbsp;&nbsp;&nbsp;&nbsp;
+			<br />&nbsp;&nbsp;&nbsp;&nbsp;
+			<br />&nbsp;&nbsp;&nbsp;&nbsp;
+			<br />&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #FF8000">/**
+			<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*&nbsp;Delete&nbsp;one/more&nbsp;user(s).&nbsp;NO&nbsp;RECOVERY&nbsp;IS&nbsp;POSSIBLE&nbsp;AFTER&nbsp;IT!
+			<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*
+			<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*&nbsp;@desc&nbsp;First&nbsp;and/or&nbsp;second&nbsp;parameter&nbsp;must&nbsp;be&nbsp;used.
+			<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*&nbsp;@param&nbsp;integer&nbsp;$id&nbsp;ID&nbsp;of&nbsp;user.
+			<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*&nbsp;@param&nbsp;string&nbsp;$where&nbsp;A&nbsp;valid&nbsp;WHERE&nbsp;statement&nbsp;directly&nbsp;uses&nbsp;in&nbsp;SQL.
+			<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*&nbsp;@param&nbsp;string&nbsp;$customTable&nbsp;See&nbsp;same&nbsp;parameter&nbsp;in&nbsp;{@link&nbsp;CakeMODx::newUser()}&nbsp;method.
+			<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*&nbsp;@return&nbsp;boolean&nbsp;TRUE&nbsp;on&nbsp;success&nbsp;and&nbsp;FALSE&nbsp;on&nbsp;failure.
+			<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*/
+			<br />&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #007700">function&nbsp;</span><span style="color: #0000BB">unsetUser</span><span style="color: #007700">(</span><span style="color: #0000BB">$id</span><span style="color: #007700">=</span><span style="color: #0000BB">0</span><span style="color: #007700">,&nbsp;</span><span style="color: #0000BB">$where</span><span style="color: #007700">=</span><span style="color: #DD0000">''</span><span style="color: #007700">,&nbsp;</span><span style="color: #0000BB">$customTable</span><span style="color: #007700">=</span><span style="color: #0000BB">null</span><span style="color: #007700">)
+			<br />&nbsp;&nbsp;&nbsp;&nbsp;
+			<br />&nbsp;&nbsp;&nbsp;&nbsp;
+			<br />&nbsp;&nbsp;&nbsp;&nbsp;
+			<br />&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #FF8000">/**
+			<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*&nbsp;Get&nbsp;data&nbsp;from&nbsp;one/more&nbsp;user(s).
+			<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*
+			<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*&nbsp;@desc&nbsp;First&nbsp;and/or&nbsp;fourth&nbsp;parameter&nbsp;must&nbsp;be&nbsp;used.
+			<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*&nbsp;@param&nbsp;integer&nbsp;$id&nbsp;ID&nbsp;of&nbsp;user.
+			<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*&nbsp;@param&nbsp;string&nbsp;$fields&nbsp;Comma&nbsp;seperated&nbsp;column&nbsp;names&nbsp;to&nbsp;use&nbsp;directly&nbsp;in&nbsp;SQL.
+			<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*&nbsp;@param&nbsp;string&nbsp;$table&nbsp;Name&nbsp;of&nbsp;table&nbsp;name.
+			<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*&nbsp;@return&nbsp;array&nbsp;Associative&nbsp;array,&nbsp;Key&nbsp;is&nbsp;column&nbsp;name&nbsp;and&nbsp;value&nbsp;is&nbsp;column&nbsp;value.
+			<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*/
+			<br />&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #007700">function&nbsp;</span><span style="color: #0000BB">getUserField</span><span style="color: #007700">(</span><span style="color: #0000BB">$id</span><span style="color: #007700">=</span><span style="color: #0000BB">0</span><span style="color: #007700">,&nbsp;</span><span style="color: #0000BB">$fields</span><span style="color: #007700">=</span><span style="color: #DD0000">'*'</span><span style="color: #007700">,&nbsp;</span><span style="color: #0000BB">$table</span><span style="color: #007700">,&nbsp;</span><span style="color: #0000BB">$where</span><span style="color: #007700">=</span><span style="color: #DD0000">''</span><span style="color: #007700">)
+			<br />&nbsp;&nbsp;&nbsp;&nbsp;
+			<br /> 
+			<br />&nbsp;&nbsp;&nbsp;&nbsp;
+			<br />&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #FF8000">/**
+			<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*&nbsp;Get&nbsp;document&nbsp;which&nbsp;the&nbsp;user&nbsp;has&nbsp;been&nbsp;assigned&nbsp;to&nbsp;them&nbsp;in&nbsp;his/her&nbsp;webgroups.
+			<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*
+			<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*&nbsp;@param&nbsp;integer&nbsp;$id&nbsp;ID&nbsp;of&nbsp;user.
+			<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*&nbsp;@return&nbsp;array&nbsp;An&nbsp;array&nbsp;contains&nbsp;documents&nbsp;IDs.
+			<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*/
+			<br />&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #007700">function&nbsp;</span><span style="color: #0000BB">getAssignedDocs</span><span style="color: #007700">(</span><span style="color: #0000BB">$userId</span><span style="color: #007700">)
+			<br />&nbsp;&nbsp;&nbsp;&nbsp;
+			<br />&nbsp;&nbsp;&nbsp;&nbsp;
+			<br />&nbsp;&nbsp;&nbsp;&nbsp;
+			<br />&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #FF8000">/**
+			<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*&nbsp;Get&nbsp;document&nbsp;which&nbsp;the&nbsp;user&nbsp;has&nbsp;NOT&nbsp;been&nbsp;assigned&nbsp;to&nbsp;them&nbsp;in&nbsp;his/her&nbsp;webgroups.
+			<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*
+			<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*&nbsp;@param&nbsp;integer&nbsp;$id&nbsp;ID&nbsp;of&nbsp;user.
+			<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*&nbsp;@return&nbsp;array&nbsp;An&nbsp;array&nbsp;contains&nbsp;documents&nbsp;IDs.
+			<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*/
+			<br />&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #007700">function&nbsp;</span><span style="color: #0000BB">getForbiddenDocs</span><span style="color: #007700">(</span><span style="color: #0000BB">$userId</span><span style="color: #007700">)
+			<br /> 
+			<br /> 
+			<br /> 
+			<br /> 
+			<br /></span><span class="title">/*&nbsp;WEB/DOC&nbsp;GROUP&nbsp;VARIABLE&nbsp;methods
+			<br />=============================================================&nbsp;*/</span><span style="color: #FF8000">
+			<br />&nbsp;&nbsp;&nbsp;&nbsp;
+			<br />&nbsp;&nbsp;&nbsp;&nbsp;/**
+			<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*&nbsp;Create&nbsp;new&nbsp;Document&nbsp;Group.
+			<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*
+			<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*&nbsp;@param&nbsp;string&nbsp;$name&nbsp;Name&nbsp;for&nbsp;Document&nbsp;Group.
+			<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*&nbsp;@return&nbsp;mixed&nbsp;ID&nbsp;of&nbsp;new&nbsp;Docgroup&nbsp;on&nbsp;success&nbsp;and&nbsp;FALSE&nbsp;on&nbsp;failure.
+			<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*/
+			<br />&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #007700">function&nbsp;</span><span style="color: #0000BB">newDocgroup</span><span style="color: #007700">(</span><span style="color: #0000BB">$name</span><span style="color: #007700">)
+			<br />&nbsp;&nbsp;&nbsp;&nbsp;
+			<br />&nbsp;&nbsp;&nbsp;&nbsp;
+			<br />&nbsp;&nbsp;&nbsp;&nbsp;
+			<br />&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #FF8000">/**
+			<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*&nbsp;Rename&nbsp;a&nbsp;Document&nbsp;Group.
+			<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*
+			<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*&nbsp;@param&nbsp;string&nbsp;$newname&nbsp;New&nbsp;name&nbsp;for&nbsp;Document&nbsp;Group.
+			<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*&nbsp;@param&nbsp;string&nbsp;$oldname&nbsp;Old&nbsp;name&nbsp;of&nbsp;Document&nbsp;Group.
+			<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*&nbsp;@return&nbsp;mixed&nbsp;ID&nbsp;of&nbsp;renamed&nbsp;Docgroup&nbsp;on&nbsp;success&nbsp;and&nbsp;FALSE&nbsp;on&nbsp;failure.
+			<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*/
+			<br />&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #007700">function&nbsp;</span><span style="color: #0000BB">renameDocgroup</span><span style="color: #007700">(</span><span style="color: #0000BB">$newname</span><span style="color: #007700">,&nbsp;</span><span style="color: #0000BB">$oldname</span><span style="color: #007700">)
+			<br />&nbsp;&nbsp;&nbsp;&nbsp;
+			<br />&nbsp;&nbsp;&nbsp;&nbsp;
+			<br />&nbsp;&nbsp;&nbsp;&nbsp;
+			<br />&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #FF8000">/**
+			<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*&nbsp;Delete&nbsp;a&nbsp;Document&nbsp;Group&nbsp;and&nbsp;ALL&nbsp;links&nbsp;to&nbsp;it's&nbsp;members.&nbsp;NO&nbsp;RECOVERY&nbsp;IS&nbsp;POSSIBLE&nbsp;AFTER&nbsp;IT!
+			<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*
+			<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*&nbsp;@param&nbsp;string&nbsp;$name&nbsp;Name&nbsp;for&nbsp;Document&nbsp;Group.
+			<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*&nbsp;@return&nbsp;boolean&nbsp;TRUE&nbsp;on&nbsp;success&nbsp;and&nbsp;FALSE&nbsp;on&nbsp;failure.
+			<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*/
+			<br />&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #007700">function&nbsp;</span><span style="color: #0000BB">unsetDocgroup</span><span style="color: #007700">(</span><span style="color: #0000BB">$name</span><span style="color: #007700">)
+			<br />&nbsp;&nbsp;&nbsp;&nbsp;
+			<br />&nbsp;&nbsp;&nbsp;&nbsp;
+			<br />&nbsp;&nbsp;&nbsp;&nbsp;
+			<br />&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #FF8000">/**
+			<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*&nbsp;Join&nbsp;document(s)&nbsp;to&nbsp;a&nbsp;Docgroup.
+			<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*
+			<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*&nbsp;@param&nbsp;string&nbsp;$groupname&nbsp;Name&nbsp;for&nbsp;Document&nbsp;Group.
+			<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*&nbsp;@param&nbsp;integer&nbsp;_unlimited_&nbsp;ID&nbsp;of&nbsp;documents&nbsp;to&nbsp;join&nbsp;as&nbsp;member.
+			<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*&nbsp;@return&nbsp;boolean&nbsp;TRUE&nbsp;on&nbsp;success&nbsp;and&nbsp;FALSE&nbsp;on&nbsp;failure.
+			<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*/
+			<br />&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #007700">function&nbsp;</span><span style="color: #0000BB">joinDocgroup</span><span style="color: #007700">(</span><span style="color: #0000BB">$groupname</span><span style="color: #007700">)
+			<br />&nbsp;&nbsp;&nbsp;&nbsp;
+			<br />&nbsp;&nbsp;&nbsp;&nbsp;
+			<br />&nbsp;&nbsp;&nbsp;&nbsp;
+			<br />&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #FF8000">/**
+			<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*&nbsp;Get&nbsp;all&nbsp;members&nbsp;of&nbsp;a&nbsp;Docgroup.
+			<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*
+			<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*&nbsp;@param&nbsp;string&nbsp;$groupname&nbsp;Name&nbsp;for&nbsp;Document&nbsp;Group.
+			<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*&nbsp;@return&nbsp;mixed&nbsp;An&nbsp;array&nbsp;contains&nbsp;document&nbsp;IDs&nbsp;on&nbsp;success&nbsp;and&nbsp;FALSE&nbsp;on&nbsp;failure.
+			<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*/
+			<br />&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #007700">function&nbsp;</span><span style="color: #0000BB">getDocgroupMembers</span><span style="color: #007700">(</span><span style="color: #0000BB">$groupname</span><span style="color: #007700">)
+			<br />&nbsp;&nbsp;&nbsp;&nbsp;
+			<br />&nbsp;&nbsp;&nbsp;&nbsp;
+			<br />&nbsp;&nbsp;&nbsp;&nbsp;
+			<br />&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #FF8000">/**
+			<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*&nbsp;Create&nbsp;new&nbsp;Web&nbsp;Group.
+			<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*
+			<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*&nbsp;@param&nbsp;string&nbsp;$name&nbsp;Name&nbsp;for&nbsp;Web&nbsp;Group.
+			<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*&nbsp;@return&nbsp;mixed&nbsp;ID&nbsp;of&nbsp;new&nbsp;Webgroup&nbsp;on&nbsp;success&nbsp;and&nbsp;FALSE&nbsp;on&nbsp;failure.
+			<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*/
+			<br />&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #007700">function&nbsp;</span><span style="color: #0000BB">newWebgroup</span><span style="color: #007700">(</span><span style="color: #0000BB">$name</span><span style="color: #007700">)
+			<br />&nbsp;&nbsp;&nbsp;&nbsp;
+			<br />&nbsp;&nbsp;&nbsp;&nbsp;
+			<br />&nbsp;&nbsp;&nbsp;&nbsp;
+			<br />&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #FF8000">/**
+			<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*&nbsp;Rename&nbsp;a&nbsp;Webument&nbsp;Group.
+			<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*
+			<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*&nbsp;@param&nbsp;string&nbsp;$newname&nbsp;New&nbsp;name&nbsp;for&nbsp;Web&nbsp;Group.
+			<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*&nbsp;@param&nbsp;string&nbsp;$oldname&nbsp;Old&nbsp;name&nbsp;of&nbsp;Web&nbsp;Group.
+			<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*&nbsp;@return&nbsp;mixed&nbsp;ID&nbsp;of&nbsp;renamed&nbsp;Webgroup&nbsp;on&nbsp;success&nbsp;and&nbsp;FALSE&nbsp;on&nbsp;failure.
+			<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*/
+			<br />&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #007700">function&nbsp;</span><span style="color: #0000BB">renameWebgroup</span><span style="color: #007700">(</span><span style="color: #0000BB">$newname</span><span style="color: #007700">,&nbsp;</span><span style="color: #0000BB">$oldname</span><span style="color: #007700">)
+			<br />&nbsp;&nbsp;&nbsp;&nbsp;
+			<br />&nbsp;&nbsp;&nbsp;&nbsp;
+			<br />&nbsp;&nbsp;&nbsp;&nbsp;
+			<br />&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #FF8000">/**
+			<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*&nbsp;Delete&nbsp;a&nbsp;Web&nbsp;Group&nbsp;and&nbsp;ALL&nbsp;links&nbsp;to&nbsp;it's&nbsp;members.&nbsp;NO&nbsp;RECOVERY&nbsp;IS&nbsp;POSSIBLE&nbsp;AFTER&nbsp;IT!
+			<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*
+			<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*&nbsp;@param&nbsp;string&nbsp;$name&nbsp;Name&nbsp;for&nbsp;Web&nbsp;Group.
+			<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*&nbsp;@return&nbsp;boolean&nbsp;TRUE&nbsp;on&nbsp;success&nbsp;and&nbsp;FALSE&nbsp;on&nbsp;failure.
+			<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*/
+			<br />&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #007700">function&nbsp;</span><span style="color: #0000BB">unsetWebgroup</span><span style="color: #007700">(</span><span style="color: #0000BB">$name</span><span style="color: #007700">)
+			<br />&nbsp;&nbsp;&nbsp;&nbsp;
+			<br />&nbsp;&nbsp;&nbsp;&nbsp;
+			<br />&nbsp;&nbsp;&nbsp;&nbsp;
+			<br />&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #FF8000">/**
+			<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*&nbsp;Join&nbsp;user(s)&nbsp;to&nbsp;a&nbsp;Webgroup.
+			<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*
+			<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*&nbsp;@param&nbsp;string&nbsp;$groupname&nbsp;Name&nbsp;for&nbsp;Web&nbsp;Group.
+			<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*&nbsp;@param&nbsp;integer&nbsp;_unlimited_&nbsp;ID&nbsp;of&nbsp;users&nbsp;to&nbsp;join&nbsp;as&nbsp;member.
+			<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*&nbsp;@return&nbsp;boolean&nbsp;TRUE&nbsp;on&nbsp;success&nbsp;and&nbsp;FALSE&nbsp;on&nbsp;failure.
+			<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*/
+			<br />&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #007700">function&nbsp;</span><span style="color: #0000BB">joinWebgroup</span><span style="color: #007700">(</span><span style="color: #0000BB">$groupname</span><span style="color: #007700">)
+			<br />&nbsp;&nbsp;&nbsp;&nbsp;
+			<br />&nbsp;&nbsp;&nbsp;&nbsp;
+			<br />&nbsp;&nbsp;&nbsp;&nbsp;
+			<br />&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #FF8000">/**
+			<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*&nbsp;Get&nbsp;all&nbsp;members&nbsp;of&nbsp;a&nbsp;Webgroup.
+			<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*
+			<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*&nbsp;@param&nbsp;string&nbsp;$groupname&nbsp;Name&nbsp;for&nbsp;Web&nbsp;Group.
+			<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*&nbsp;@return&nbsp;mixed&nbsp;An&nbsp;array&nbsp;contains&nbsp;document&nbsp;IDs&nbsp;on&nbsp;success&nbsp;and&nbsp;FALSE&nbsp;on&nbsp;failure.
+			<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*/
+			<br />&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #007700">function&nbsp;</span><span style="color: #0000BB">getWebgroupMembers</span><span style="color: #007700">(</span><span style="color: #0000BB">$groupname</span><span style="color: #007700">)
+			<br />&nbsp;&nbsp;&nbsp;&nbsp;
+			<br />&nbsp;&nbsp;&nbsp;&nbsp;
+			<br />&nbsp;&nbsp;&nbsp;&nbsp;
+			<br />&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #FF8000">/**
+			<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*&nbsp;Assign&nbsp;a&nbsp;Webgroup&nbsp;to&nbsp;a&nbsp;Docgroup.
+			<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*
+			<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*&nbsp;@param&nbsp;string&nbsp;$webgroupName&nbsp;Name&nbsp;for&nbsp;Web&nbsp;Group.
+			<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*&nbsp;@param&nbsp;string&nbsp;$docgroupName&nbsp;Name&nbsp;for&nbsp;Document&nbsp;Group.
+			<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*&nbsp;@return&nbsp;mixed&nbsp;ID&nbsp;of&nbsp;new&nbsp;assignment&nbsp;id&nbsp;in&nbsp;table&nbsp;on&nbsp;success&nbsp;and&nbsp;FALSE&nbsp;on&nbsp;failure.
+			<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*/
+			<br />&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #007700">function&nbsp;</span><span style="color: #0000BB">linkGroups</span><span style="color: #007700">(</span><span style="color: #0000BB">$webgroupName</span><span style="color: #007700">,&nbsp;</span><span style="color: #0000BB">$docgroupName</span><span style="color: #007700">)
+			<br />&nbsp;&nbsp;&nbsp;&nbsp;
+			<br />&nbsp;&nbsp;&nbsp;&nbsp;
+			<br />&nbsp;&nbsp;&nbsp;&nbsp;
+			<br />&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #FF8000">/**
+			<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*&nbsp;Unlink&nbsp;a&nbsp;Webgroup&nbsp;from&nbsp;a&nbsp;Docgroup.
+			<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*
+			<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*&nbsp;@param&nbsp;string&nbsp;$webgroupName&nbsp;Name&nbsp;for&nbsp;Web&nbsp;Group.
+			<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*&nbsp;@param&nbsp;string&nbsp;$docgroupName&nbsp;Name&nbsp;for&nbsp;Document&nbsp;Group.
+			<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*&nbsp;@return&nbsp;mixed&nbsp;ID&nbsp;of&nbsp;new&nbsp;assignment&nbsp;id&nbsp;in&nbsp;table&nbsp;on&nbsp;success&nbsp;and&nbsp;FALSE&nbsp;on&nbsp;failure.
+			<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*/
+			<br />&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #007700">function&nbsp;</span><span style="color: #0000BB">unlinkGroups</span><span style="color: #007700">(</span><span style="color: #0000BB">$webgroupName</span><span style="color: #007700">,&nbsp;</span><span style="color: #0000BB">$docgroupName</span><span style="color: #007700">)
+			<br /> 
+			<br /> 
+			<br /> 
+			<br /> 
+			<br /></span><span class="title">/*&nbsp;JOT&nbsp;COMMENT&nbsp;methods
+			<br />=============================================================&nbsp;*/</span><span style="color: #FF8000">
+			<br />&nbsp;&nbsp;&nbsp;&nbsp;
+			<br />&nbsp;&nbsp;&nbsp;&nbsp;/**
+			<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*&nbsp;Get&nbsp;a&nbsp;comment&nbsp;by&nbsp;document&nbsp;container.
+			<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*
+			<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*&nbsp;@param&nbsp;integer&nbsp;$doc&nbsp;Document&nbsp;ID.
+			<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*&nbsp;@param&nbsp;string&nbsp;$tagid&nbsp;Tagid&nbsp;parameter.
+			<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*&nbsp;@param&nbsp;mixed&nbsp;$fields&nbsp;Fields&nbsp;as&nbsp;array&nbsp;and&nbsp;single&nbsp;field&nbsp;as&nbsp;string.
+			<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*&nbsp;@return&nbsp;mixed&nbsp;Array&nbsp;of&nbsp;comment&nbsp;data&nbsp;on&nbsp;success&nbsp;and&nbsp;FALSE&nbsp;on&nbsp;failure.
+			<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*/
+			<br />&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #007700">function&nbsp;</span><span style="color: #0000BB">comment_byDoc</span><span style="color: #007700">(</span><span style="color: #0000BB">$doc</span><span style="color: #007700">,&nbsp;</span><span style="color: #0000BB">$fields</span><span style="color: #007700">=</span><span style="color: #DD0000">'content'</span><span style="color: #007700">,&nbsp;</span><span style="color: #0000BB">$tagid</span><span style="color: #007700">=</span><span style="color: #DD0000">''</span><span style="color: #007700">)
+			<br />&nbsp;&nbsp;&nbsp;&nbsp;
+			<br />&nbsp;&nbsp;&nbsp;&nbsp;
+			<br />&nbsp;&nbsp;&nbsp;&nbsp;
+			<br />&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #FF8000">/**
+			<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*&nbsp;Get&nbsp;a&nbsp;comment&nbsp;by&nbsp;parent&nbsp;of&nbsp;document&nbsp;containers.
+			<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*
+			<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*&nbsp;@param&nbsp;integer&nbsp;$parent&nbsp;Parent&nbsp;ID.
+			<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*&nbsp;@param&nbsp;mixed&nbsp;$fields&nbsp;Fields&nbsp;as&nbsp;array&nbsp;and&nbsp;single&nbsp;field&nbsp;as&nbsp;string.
+			<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*&nbsp;@return&nbsp;mixed&nbsp;Array&nbsp;of&nbsp;comment&nbsp;data&nbsp;on&nbsp;success&nbsp;and&nbsp;FALSE&nbsp;on&nbsp;failure.
+			<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*/
+			<br />&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #007700">function&nbsp;</span><span style="color: #0000BB">comment_byParent</span><span style="color: #007700">(</span><span style="color: #0000BB">$parent</span><span style="color: #007700">,&nbsp;</span><span style="color: #0000BB">$fields</span><span style="color: #007700">=</span><span style="color: #DD0000">'content'</span><span style="color: #007700">)
+			<br />&nbsp;&nbsp;&nbsp;&nbsp;
+			<br />&nbsp;&nbsp;&nbsp;&nbsp;
+			<br />&nbsp;&nbsp;&nbsp;&nbsp;
+			<br />&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #FF8000">/**
+			<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*&nbsp;Get&nbsp;a&nbsp;comment&nbsp;by&nbsp;SQL&nbsp;WHERE&nbsp;statement.
+			<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*
+			<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*&nbsp;@param&nbsp;string&nbsp;$where&nbsp;Valid&nbsp;SQL&nbsp;WHERE&nbsp;statement.&nbsp;ALL&nbsp;fields&nbsp;have&nbsp;'jot'&nbsp;prefix&nbsp;(e.g.&nbsp;jot.id).
+			<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*&nbsp;@return&nbsp;mixed&nbsp;Array&nbsp;of&nbsp;comment&nbsp;data&nbsp;on&nbsp;success&nbsp;and&nbsp;FALSE&nbsp;on&nbsp;failure.
+			<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*/
+			<br />&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #007700">function&nbsp;</span><span style="color: #0000BB">comment_byWhere</span><span style="color: #007700">(</span><span style="color: #0000BB">$where</span><span style="color: #007700">,&nbsp;</span><span style="color: #0000BB">$fields</span><span style="color: #007700">=</span><span style="color: #DD0000">'content'</span><span style="color: #007700">)
+			<br />&nbsp;&nbsp;&nbsp;&nbsp;
+			<br />&nbsp;&nbsp;&nbsp;&nbsp;
+			<br />&nbsp;&nbsp;&nbsp;&nbsp;
+			<br />&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #FF8000">/**
+			<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*&nbsp;Get&nbsp;a&nbsp;comments&nbsp;count&nbsp;by&nbsp;document&nbsp;container.
+			<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*
+			<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*&nbsp;@param&nbsp;integer&nbsp;$doc&nbsp;Document&nbsp;ID.
+			<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*&nbsp;@param&nbsp;string&nbsp;$tagid&nbsp;Tagid&nbsp;parameter.
+			<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*&nbsp;@return&nbsp;mixed&nbsp;Comments&nbsp;count&nbsp;as&nbsp;integer&nbsp;on&nbsp;success&nbsp;and&nbsp;FALSE&nbsp;on&nbsp;failure.
+			<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*/
+			<br />&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #007700">function&nbsp;</span><span style="color: #0000BB">commentCount_byDoc</span><span style="color: #007700">(</span><span style="color: #0000BB">$doc</span><span style="color: #007700">,&nbsp;</span><span style="color: #0000BB">$tagid</span><span style="color: #007700">=</span><span style="color: #DD0000">''</span><span style="color: #007700">)
+			<br />&nbsp;&nbsp;&nbsp;&nbsp;
+			<br />&nbsp;&nbsp;&nbsp;&nbsp;
+			<br />&nbsp;&nbsp;&nbsp;&nbsp;
+			<br />&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #FF8000">/**
+			<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*&nbsp;Get&nbsp;a&nbsp;comments&nbsp;count&nbsp;by&nbsp;parent&nbsp;of&nbsp;document&nbsp;containers.
+			<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*
+			<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*&nbsp;@param&nbsp;integer&nbsp;$parent&nbsp;Parent&nbsp;ID.
+			<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*&nbsp;@return&nbsp;mixed&nbsp;Comments&nbsp;count&nbsp;as&nbsp;integer&nbsp;on&nbsp;success&nbsp;and&nbsp;FALSE&nbsp;on&nbsp;failure.
+			<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*/
+			<br />&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #007700">function&nbsp;</span><span style="color: #0000BB">commentCount_byParent</span><span style="color: #007700">(</span><span style="color: #0000BB">$parent</span><span style="color: #007700">)
+			<br />&nbsp;&nbsp;&nbsp;&nbsp;
+			<br />&nbsp;&nbsp;&nbsp;&nbsp;
+			<br />&nbsp;&nbsp;&nbsp;&nbsp;
+			<br />&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #FF8000">/**
+			<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*&nbsp;Get&nbsp;a&nbsp;comments&nbsp;count&nbsp;by&nbsp;SQL&nbsp;WHERE&nbsp;statement.
+			<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*
+			<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*&nbsp;@param&nbsp;string&nbsp;$where&nbsp;Valid&nbsp;SQL&nbsp;WHERE&nbsp;statement.
+			<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*&nbsp;@return&nbsp;mixed&nbsp;Comments&nbsp;count&nbsp;as&nbsp;integer&nbsp;on&nbsp;success&nbsp;and&nbsp;FALSE&nbsp;on&nbsp;failure.
+			<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*/
+			<br />&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #007700">function&nbsp;</span><span style="color: #0000BB">commentCount_byWhere</span><span style="color: #007700">(</span><span style="color: #0000BB">$where</span><span style="color: #007700">)
+			<br />&nbsp;&nbsp;&nbsp;&nbsp;
+			<br />&nbsp;&nbsp;&nbsp;&nbsp;
+			<br />&nbsp;&nbsp;&nbsp;&nbsp;
+			<br />&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #FF8000">/**
+			<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*&nbsp;Get&nbsp;a&nbsp;subscriptions&nbsp;by&nbsp;document&nbsp;container.
+			<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*
+			<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*&nbsp;@param&nbsp;integer&nbsp;$doc&nbsp;Document&nbsp;ID.
+			<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*&nbsp;@param&nbsp;string&nbsp;$tagid&nbsp;Tagid&nbsp;parameter.
+			<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*&nbsp;@return&nbsp;mixed&nbsp;Array&nbsp;of&nbsp;subscriptions&nbsp;data&nbsp;on&nbsp;success&nbsp;and&nbsp;FALSE&nbsp;on&nbsp;failure.
+			<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*/
+			<br />&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #007700">function&nbsp;</span><span style="color: #0000BB">comment_subscriptions_byDoc</span><span style="color: #007700">(</span><span style="color: #0000BB">$doc</span><span style="color: #007700">,&nbsp;</span><span style="color: #0000BB">$tagid</span><span style="color: #007700">=</span><span style="color: #DD0000">''</span><span style="color: #007700">)
+			<br />&nbsp;&nbsp;&nbsp;&nbsp;
+			<br />&nbsp;&nbsp;&nbsp;&nbsp;
+			<br />&nbsp;&nbsp;&nbsp;&nbsp;
+			<br />&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #FF8000">/**
+			<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*&nbsp;Get&nbsp;a&nbsp;subscriptions&nbsp;by&nbsp;parent&nbsp;of&nbsp;document&nbsp;containers.
+			<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*
+			<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*&nbsp;@param&nbsp;integer&nbsp;$parent&nbsp;Parent&nbsp;ID.
+			<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*&nbsp;@return&nbsp;mixed&nbsp;Array&nbsp;of&nbsp;subscriptions&nbsp;data&nbsp;on&nbsp;success&nbsp;and&nbsp;FALSE&nbsp;on&nbsp;failure.
+			<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*/
+			<br />&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #007700">function&nbsp;</span><span style="color: #0000BB">comment_subscriptions_byParent</span><span style="color: #007700">(</span><span style="color: #0000BB">$parent</span><span style="color: #007700">)
+			<br />&nbsp;&nbsp;&nbsp;&nbsp;
+			<br />&nbsp;&nbsp;&nbsp;&nbsp;
+			<br />&nbsp;&nbsp;&nbsp;&nbsp;
+			<br />&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #FF8000">/**
+			<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*&nbsp;Get&nbsp;a&nbsp;subscriptions&nbsp;by&nbsp;SQL&nbsp;WHERE&nbsp;statement.
+			<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*
+			<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*&nbsp;@param&nbsp;string&nbsp;$where&nbsp;Valid&nbsp;SQL&nbsp;WHERE&nbsp;statement.&nbsp;ALL&nbsp;fields&nbsp;have&nbsp;prefix.
+			<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*&nbsp;Prefixes&nbsp;are&nbsp;"subs"&nbsp;for&nbsp;`jot_subscriptions`&nbsp;and&nbsp;"jot"&nbsp;for&nbsp;`jot_content`.
+			<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*&nbsp;@return&nbsp;mixed&nbsp;Array&nbsp;of&nbsp;subscriptions&nbsp;data&nbsp;on&nbsp;success&nbsp;and&nbsp;FALSE&nbsp;on&nbsp;failure.
+			<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*/
+			<br />&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #007700">function&nbsp;</span><span style="color: #0000BB">comment_subscriptions_byWhere</span><span style="color: #007700">(</span><span style="color: #0000BB">$where</span><span style="color: #007700">)
+			<br />&nbsp;&nbsp;&nbsp;&nbsp;
+			<br />&nbsp;&nbsp;&nbsp;&nbsp;
+			<br />&nbsp;&nbsp;&nbsp;&nbsp;
+			<br />&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #FF8000">/**
+			<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*&nbsp;Create&nbsp;a&nbsp;new&nbsp;comment.
+			<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*
+			<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*&nbsp;@param&nbsp;array&nbsp;$fields&nbsp;An&nbsp;associative&nbsp;array&nbsp;contains&nbsp;`jot_content`&nbsp;columns&nbsp;as&nbsp;KEY&nbsp;to&nbsp;insert&nbsp;in&nbsp;DB.
+			<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*&nbsp;@param&nbsp;array&nbsp;$customFields&nbsp;A&nbsp;multidimentional&nbsp;array&nbsp;contains&nbsp;label&nbsp;and&nbsp;value&nbsp;of&nbsp;custom&nbsp;fields&nbsp;like&nbsp;below
+			<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*&nbsp;&lt;code&gt;
+			<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;$customFields&nbsp;=&nbsp;array(
+			<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"name"&nbsp;=&gt;&nbsp;"testMan",
+			<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"email"&nbsp;=&gt;&nbsp;"ex@m.ple",
+			<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"age"&nbsp;=&gt;&nbsp;"999",
+			<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"label1"&nbsp;=&gt;&nbsp;"value1",
+			<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"label2"&nbsp;=&gt;&nbsp;"value2",
+			<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"label3"&nbsp;=&gt;&nbsp;"value3"
+			<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;);
+			<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*&nbsp;&lt;/code&gt;
+			<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*&nbsp;@param&nbsp;array&nbsp;$subscriptions&nbsp;A&nbsp;multidimentional&nbsp;array&nbsp;contains&nbsp;`jot_subscriptions`&nbsp;fields&nbsp;like&nbsp;below
+			<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*&nbsp;@note&nbsp;`uparent`&nbsp;is&nbsp;ID&nbsp;of&nbsp;document&nbsp;that&nbsp;Jot&nbsp;call&nbsp;placed&nbsp;there.
+			<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*&nbsp;&lt;code&gt;
+			<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;$subscriptions&nbsp;=&nbsp;array(
+			<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;array("uparent"&nbsp;=&gt;&nbsp;"14"&nbsp;,&nbsp;"tagid"&nbsp;=&gt;&nbsp;""&nbsp;,&nbsp;"userid"&nbsp;=&gt;&nbsp;"7"),
+			<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;array("label"&nbsp;=&gt;&nbsp;"14"&nbsp;,&nbsp;"tagid"&nbsp;=&gt;&nbsp;""&nbsp;,&nbsp;"userid"&nbsp;=&gt;&nbsp;"8")
+			<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;);
+			<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*&nbsp;&lt;/code&gt;
+			<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*&nbsp;@return&nbsp;mixed&nbsp;New&nbsp;comment&nbsp;ID&nbsp;as&nbsp;Integer&nbsp;on&nbsp;success&nbsp;and&nbsp;FALSE&nbsp;on&nbsp;failure.
+			<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*/
+			<br />&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #007700">function&nbsp;</span><span style="color: #0000BB">comment_new</span><span style="color: #007700">(</span><span style="color: #0000BB">$fields</span><span style="color: #007700">,&nbsp;</span><span style="color: #0000BB">$customFields</span><span style="color: #007700">=</span><span style="color: #0000BB">null</span><span style="color: #007700">,&nbsp;</span><span style="color: #0000BB">$subscriptions</span><span style="color: #007700">=</span><span style="color: #0000BB">null</span><span style="color: #007700">)
+			<br />&nbsp;&nbsp;&nbsp;&nbsp;
+			<br />&nbsp;&nbsp;&nbsp;&nbsp;
+			<br />&nbsp;&nbsp;&nbsp;&nbsp;
+			<br />&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #FF8000">/**
+			<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*&nbsp;Move&nbsp;comments&nbsp;to&nbsp;another&nbsp;document.
+			<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*
+			<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*&nbsp;@param&nbsp;mixed&nbsp;$commentId&nbsp;Contains&nbsp;comment&nbsp;IDs.&nbsp;Single&nbsp;ID&nbsp;as&nbsp;integer&nbsp;and&nbsp;more&nbsp;as&nbsp;array.&nbsp;
+			<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*&nbsp;@param&nbsp;integer&nbsp;$toDoc&nbsp;Document&nbsp;ID&nbsp;that&nbsp;comment&nbsp;should&nbsp;moved&nbsp;there.
+			<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*&nbsp;@param&nbsp;integer&nbsp;$tagId&nbsp;Tagid&nbsp;that&nbsp;comments&nbsp;in&nbsp;new&nbsp;document&nbsp;must&nbsp;be&nbsp;in&nbsp;(IMPORTANT!).
+			<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*&nbsp;@return&nbsp;void.
+			<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*/
+			<br />&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #007700">function&nbsp;</span><span style="color: #0000BB">comment_move</span><span style="color: #007700">(</span><span style="color: #0000BB">$commentId&nbsp;</span><span style="color: #007700">,&nbsp;</span><span style="color: #0000BB">$toDoc</span><span style="color: #007700">,&nbsp;</span><span style="color: #0000BB">$tagId</span><span style="color: #007700">=</span><span style="color: #0000BB">null</span><span style="color: #007700">)
+			<br /> 
+			<br /> 
+			<br /> 
+			<br /> 
+			<br /></span><span class="title">/*&nbsp;MISC&nbsp;methods
+			<br />=============================================================&nbsp;*/</span><span style="color: #FF8000">
+			<br />&nbsp;&nbsp;&nbsp;&nbsp;
+			<br />&nbsp;&nbsp;&nbsp;&nbsp;/**
+			<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*&nbsp;Get&nbsp;pagetitle&nbsp;by&nbsp;document&nbsp;ID.
+			<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*
+			<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*&nbsp;@desc&nbsp;Uses&nbsp;{@link&nbsp;CakeMODx::getDocField()}.
+			<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*&nbsp;@param&nbsp;integer&nbsp;$id&nbsp;Document&nbsp;ID.
+			<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*&nbsp;@return&nbsp;mixed&nbsp;Document&nbsp;pagetitle&nbsp;on&nbsp;success&nbsp;and&nbsp;FALSE&nbsp;on&nbsp;failure.
+			<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*/
+			<br />&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #007700">function&nbsp;</span><span style="color: #0000BB">doc_id2title</span><span style="color: #007700">(</span><span style="color: #0000BB">$id</span><span style="color: #007700">)
+			<br />&nbsp;&nbsp;&nbsp;&nbsp;
+			<br />&nbsp;&nbsp;&nbsp;&nbsp;
+			<br />&nbsp;&nbsp;&nbsp;&nbsp;
+			<br />&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #FF8000">/**
+			<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*&nbsp;Get&nbsp;ID&nbsp;of&nbsp;TV&nbsp;by&nbsp;it's&nbsp;name.
+			<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*
+			<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*&nbsp;@param&nbsp;array&nbsp;$tvNames&nbsp;TV&nbsp;names&nbsp;as&nbsp;array.
+			<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*&nbsp;@return&nbsp;array&nbsp;An&nbsp;associative&nbsp;array.&nbsp;Key&nbsp;is&nbsp;TV&nbsp;name&nbsp;and&nbsp;value&nbsp;is&nbsp;TV&nbsp;ID.
+			<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*/
+			<br />&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #007700">function&nbsp;</span><span style="color: #0000BB">TV_name2id</span><span style="color: #007700">(</span><span style="color: #0000BB">$tvNames</span><span style="color: #007700">=array())
+			<br />&nbsp;&nbsp;&nbsp;&nbsp;
+			<br />&nbsp;&nbsp;&nbsp;&nbsp;
+			<br />&nbsp;&nbsp;&nbsp;&nbsp;
+			<br />&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #FF8000">/**
+			<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*&nbsp;Get&nbsp;fullname&nbsp;by&nbsp;User&nbsp;ID.
+			<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*
+			<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*&nbsp;@desc&nbsp;Uses&nbsp;{@link&nbsp;CakeMODx::getUserField()}.
+			<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*&nbsp;@param&nbsp;integer&nbsp;$id&nbsp;User&nbsp;ID.
+			<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*&nbsp;@return&nbsp;mixed&nbsp;User's&nbsp;fullname&nbsp;on&nbsp;success&nbsp;and&nbsp;FALSE&nbsp;on&nbsp;failure.
+			<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*/
+			<br />&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #007700">function&nbsp;</span><span style="color: #0000BB">user_id2fullname</span><span style="color: #007700">(</span><span style="color: #0000BB">$id</span><span style="color: #007700">)
+			<br />&nbsp;&nbsp;&nbsp;&nbsp;
+			<br />&nbsp;&nbsp;&nbsp;&nbsp;
+			<br />&nbsp;&nbsp;&nbsp;&nbsp;
+			<br />&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #FF8000">/**
+			<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*&nbsp;Highlight&nbsp;a&nbsp;string&nbsp;in&nbsp;text&nbsp;without&nbsp;corrupting&nbsp;HTML&nbsp;tags.
+			<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*
+			<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*&nbsp;@author&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Aidan&nbsp;Lister&nbsp;&lt;aidan@php.net&gt;
+			<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*&nbsp;@version&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;3.1.1
+			<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*&nbsp;@link&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;http://aidanlister.com/repos/v/function.str_highlight.php
+			<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*&nbsp;@param&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;string&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;$text&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Haystack&nbsp;-&nbsp;The&nbsp;text&nbsp;to&nbsp;search
+			<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*&nbsp;@param&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;array|string&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;$needle&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Needle&nbsp;-&nbsp;The&nbsp;string&nbsp;to&nbsp;highlight
+			<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*&nbsp;@param&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;bool&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;$options&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Bitwise&nbsp;set&nbsp;of&nbsp;options
+			<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*&nbsp;@param&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;array&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;$highlight&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Replacement&nbsp;string
+			<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*&nbsp;@param&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;integer&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;$STR_HIGHLIGHT_SIMPLE&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Perform&nbsp;a&nbsp;simple&nbsp;text&nbsp;replace.&nbsp;This&nbsp;should&nbsp;be&nbsp;used&nbsp;when&nbsp;the&nbsp;string&nbsp;does&nbsp;not&nbsp;contain&nbsp;HTML
+			<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*&nbsp;@param&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;integer&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;$STR_HIGHLIGHT_WHOLEWD&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Only&nbsp;match&nbsp;whole&nbsp;words&nbsp;in&nbsp;the&nbsp;string.
+			<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*&nbsp;@param&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;integer&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;$STR_HIGHLIGHT_CASESENS&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Case&nbsp;sensitive&nbsp;matching.
+			<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*&nbsp;@param&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;integer&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;$STR_HIGHLIGHT_STRIPLINKS&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Overwrite&nbsp;links&nbsp;if&nbsp;matched.&nbsp;This&nbsp;should&nbsp;be&nbsp;used&nbsp;when&nbsp;the&nbsp;replacement&nbsp;string&nbsp;is&nbsp;a&nbsp;link
+			<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*&nbsp;
+			<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*&nbsp;@return&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Text&nbsp;with&nbsp;needle&nbsp;highlighted
+			<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*/
+			<br />&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #007700">function&nbsp;</span><span style="color: #0000BB">str_highlight</span><span style="color: #007700">(</span><span style="color: #0000BB">$text</span><span style="color: #007700">,&nbsp;</span><span style="color: #0000BB">$needle</span><span style="color: #007700">,&nbsp;</span><span style="color: #0000BB">$options</span><span style="color: #007700">=</span><span style="color: #0000BB">null</span><span style="color: #007700">,&nbsp;</span><span style="color: #0000BB">$highlight</span><span style="color: #007700">=</span><span style="color: #0000BB">null</span><span style="color: #007700">,&nbsp;</span><span style="color: #0000BB">$STR_HIGHLIGHT_SIMPLE</span><span style="color: #007700">=</span><span style="color: #0000BB">null</span><span style="color: #007700">,&nbsp;</span><span style="color: #0000BB">$STR_HIGHLIGHT_WHOLEWD</span><span style="color: #007700">=</span><span style="color: #0000BB">null</span><span style="color: #007700">,&nbsp;</span><span style="color: #0000BB">$STR_HIGHLIGHT_CASESENS</span><span style="color: #007700">=</span><span style="color: #0000BB">null</span><span style="color: #007700">,&nbsp;</span><span style="color: #0000BB">$STR_HIGHLIGHT_STRIPLINKS</span><span style="color: #007700">=</span><span style="color: #0000BB">null</span><span style="color: #007700">)
+			<br />&nbsp;&nbsp;&nbsp;&nbsp;
+			<br />&nbsp;&nbsp;&nbsp;&nbsp;
+			<br />&nbsp;&nbsp;&nbsp;&nbsp;
+			<br />&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #FF8000">/**
+			<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*&nbsp;Escape&nbsp;strings&nbsp;to&nbsp;use&nbsp;in&nbsp;SQL&nbsp;commands.
+			<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*
+			<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*&nbsp;@desc&nbsp;It&nbsp;is&nbsp;DBAPI::escape&nbsp;with&nbsp;magic_quotes&nbsp;checking.
+			<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*&nbsp;@param&nbsp;string&nbsp;$str&nbsp;String&nbsp;to&nbsp;escape.
+			<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*&nbsp;@return&nbsp;string&nbsp;Escaped&nbsp;string.
+			<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*/
+			<br />&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #007700">function&nbsp;</span><span style="color: #0000BB">escape</span><span style="color: #007700">(</span><span style="color: #0000BB">$str</span><span style="color: #007700">)
+			<br />&nbsp;&nbsp;&nbsp;&nbsp;
+			<br />&nbsp;&nbsp;&nbsp;&nbsp;
+			<br />&nbsp;&nbsp;&nbsp;&nbsp;
+			<br />&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #FF8000">/**
+			<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*&nbsp;Escape&nbsp;array&nbsp;values&nbsp;for&nbsp;SQL&nbsp;commands.
+			<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*
+			<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*&nbsp;@desc&nbsp;Uses&nbsp;{@link&nbsp;CakeMODx::escape()}.&nbsp;Useful&nbsp;for&nbsp;escaping&nbsp;$_GET&nbsp;and&nbsp;$_POST&nbsp;vars.
+			<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*&nbsp;@param&nbsp;array&nbsp;$array&nbsp;Array&nbsp;to&nbsp;escape.
+			<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*&nbsp;@param&nbsp;boolean&nbsp;$escapeKeys&nbsp;Escape&nbsp;array&nbsp;KEYs.
+			<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*&nbsp;@return&nbsp;array&nbsp;Escaped&nbsp;array.
+			<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*/
+			<br />&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #007700">function&nbsp;</span><span style="color: #0000BB">arr_escape</span><span style="color: #007700">(</span><span style="color: #0000BB">$array</span><span style="color: #007700">,&nbsp;</span><span style="color: #0000BB">$escapeKeys</span><span style="color: #007700">=</span><span style="color: #0000BB">false</span><span style="color: #007700">)
+			<br />&nbsp;&nbsp;&nbsp;&nbsp;
+			<br /> 
+			<br />&nbsp;&nbsp;&nbsp;&nbsp;
+			<br />&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #FF8000">/**
+			<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*&nbsp;Send&nbsp;email&nbsp;to&nbsp;some&nbsp;addresses.
+			<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*
+			<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*&nbsp;@desc&nbsp;Uses&nbsp;{@link&nbsp;CakeMODx::PHPMailer()}&nbsp;from&nbsp;PHPMailer&nbsp;class.
+			<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*&nbsp;@param&nbsp;mixed&nbsp;$emails&nbsp;Email&nbsp;addresses&nbsp;as&nbsp;array&nbsp;or&nbsp;string&nbsp;for&nbsp;a&nbsp;single&nbsp;address.
+			<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*&nbsp;@param&nbsp;string&nbsp;$subject&nbsp;Email&nbsp;title.
+			<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*&nbsp;@param&nbsp;string&nbsp;$body&nbsp;Message&nbsp;body.
+			<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*&nbsp;@param&nbsp;boolean&nbsp;$isHTML&nbsp;Set&nbsp;TRUE&nbsp;for&nbsp;text/html&nbsp;contentType&nbsp;and&nbsp;FALSE&nbsp;to&nbsp;text/plain.
+			<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*&nbsp;@param&nbsp;string&nbsp;$charset&nbsp;Email&nbsp;character&nbsp;set.
+			<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*&nbsp;@param&nbsp;string&nbsp;$from&nbsp;From&nbsp;email&nbsp;address.&nbsp;Usually&nbsp;is&nbsp;set&nbsp;to&nbsp;$modx-&gt;config['mailsender'].
+			<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*&nbsp;@param&nbsp;string&nbsp;$fromName&nbsp;From&nbsp;Name.&nbsp;Usually&nbsp;is&nbsp;set&nbsp;to&nbsp;$modx-&gt;config['site_name'].
+			<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*&nbsp;@return&nbsp;boolean&nbsp;TRUE&nbsp;on&nbsp;success&nbsp;sending&nbsp;and&nbsp;FALSE&nbsp;on&nbsp;failure.
+			<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*/
+			<br />&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #007700">function&nbsp;</span><span style="color: #0000BB">sendMail</span><span style="color: #007700">(</span><span style="color: #0000BB">$emails</span><span style="color: #007700">,&nbsp;</span><span style="color: #0000BB">$subject</span><span style="color: #007700">=</span><span style="color: #DD0000">''</span><span style="color: #007700">,&nbsp;</span><span style="color: #0000BB">$body</span><span style="color: #007700">,&nbsp;</span><span style="color: #0000BB">$isHTML</span><span style="color: #007700">=</span><span style="color: #0000BB">false</span><span style="color: #007700">,&nbsp;</span><span style="color: #0000BB">$charset</span><span style="color: #007700">=</span><span style="color: #DD0000">'utf-8'</span><span style="color: #007700">,&nbsp;</span><span style="color: #0000BB">$from</span><span style="color: #007700">=</span><span style="color: #DD0000">''</span><span style="color: #007700">,&nbsp;</span><span style="color: #0000BB">$fromName</span><span style="color: #007700">=</span><span style="color: #DD0000">''</span><span style="color: #007700">)
+			<br />&nbsp;&nbsp;&nbsp;&nbsp;
+			<br />&nbsp;&nbsp;&nbsp;&nbsp;
+			<br />&nbsp;&nbsp;&nbsp;&nbsp;
+			<br />&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #FF8000">/**
+			<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*&nbsp;Get&nbsp;PHPMailer&nbsp;object.
+			<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*
+			<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*&nbsp;@desc&nbsp;Used&nbsp;in&nbsp;{@link&nbsp;CakeMODx::sendMail()}.
+			<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*&nbsp;@return&nbsp;object&nbsp;PHPMailer&nbsp;object.
+			<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*/
+			<br />&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #007700">function&nbsp;</span><span style="color: #0000BB">PHPMailer</span><span style="color: #007700">()
+			<br />&nbsp;&nbsp;&nbsp;&nbsp;
+			<br />&nbsp;&nbsp;&nbsp;&nbsp;
+			<br />&nbsp;&nbsp;&nbsp;&nbsp;
+			<br />&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #FF8000">/**
+			<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*&nbsp;Strip&nbsp;MODx&nbsp;tags.
+			<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*
+			<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*&nbsp;@desc&nbsp;Codes&nbsp;have&nbsp;come&nbsp;from&nbsp;DocumentParser::striptags&nbsp;but&nbsp;it&nbsp;doesn't&nbsp;strip&nbsp;HTML&nbsp;tags!
+			<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*&nbsp;@param&nbsp;string&nbsp;$str&nbsp;String&nbsp;to&nbsp;strip.
+			<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*&nbsp;@param&nbsp;boolean&nbsp;$stripHTML&nbsp;Strip&nbsp;HTML&nbsp;tags.
+			<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*&nbsp;@param&nbsp;string&nbsp;$allowableTags&nbsp;When&nbsp;$stripHTML&nbsp;is&nbsp;TRUE,&nbsp;this&nbsp;parameter&nbsp;will&nbsp;be&nbsp;second&nbsp;parameter&nbsp;of&nbsp;strip_tags()&nbsp;function.
+			<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*&nbsp;@return&nbsp;string&nbsp;Stripped&nbsp;string.
+			<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*/
+			<br />&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #007700">function&nbsp;</span><span style="color: #0000BB">stripModxTags</span><span style="color: #007700">(</span><span style="color: #0000BB">$str</span><span style="color: #007700">,&nbsp;</span><span style="color: #0000BB">$stripHTML</span><span style="color: #007700">=</span><span style="color: #0000BB">false</span><span style="color: #007700">,&nbsp;</span><span style="color: #0000BB">$allowableTags</span><span style="color: #007700">=</span><span style="color: #DD0000">""</span><span style="color: #007700">)
+			<br />&nbsp;&nbsp;&nbsp;&nbsp;
+			<br />&nbsp;&nbsp;&nbsp;&nbsp;
+			<br />&nbsp;&nbsp;&nbsp;&nbsp;
+			<br />&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #FF8000">/**
+			<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*&nbsp;Get&nbsp;IP
+			<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*
+			<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*&nbsp;@return&nbsp;string&nbsp;IP.
+			<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*/
+			<br />&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #007700">function&nbsp;</span><span style="color: #0000BB">getIP</span><span style="color: #007700">()
+			<br /> 
+			<br />&nbsp;&nbsp;&nbsp;&nbsp;
+			<br />}</span> 
+			</span> 
+			</code>
+		</div>
+		<p id="cr"><b>CakeMODx</b> <i>1.3 beta</i> by AHHP</p>
+	</body>
+</html>
+	

@@ -1,0 +1,27 @@
+В комплекте:
+
+- phx
+- phx:char_limit - для обрезки текста
+- TVimageResizer
+- WebloginPE 1.3.2
+- Easy Newsletter автоматическая рассылка по списку при создании новости, форма подписки.
+- Яндекс-карта 2.0(tv/snippet: [[map? &id=`[*id*]` &w=`width` &h=`height`]])
+- Яндекс Пингер
+- EditArea(подсветка синтаксиса)
+- Sitemap с необходимыми tv-параметрами
+- manager\includes\controls\CakeMODx1.3\
+- Модуль/сниппет Evogallery(+сниппет picid для получения первой картинки документа) - дока: http://rtfm.modx.com/display/ADDON/EvoGallery#EvoGallery-WhatisEvoGallery%3F
+
+И уже бесполезный сниппет:
+- content2desc(обрезает контент до 200 символов и вставляет в мета-description, если он не заполнен)
+
+Фиксы:
+- Новый параметр Evogallery: &group=`2` - позволяет группировать картинки(&itemTpl) по шаблону &tpl в заданном кол-ве.
+- Настроенный TransAlias(транслитерация загружаемых файлов)
+- Ditto поддерживает SQL в условиях выборки(http://modx-shopkeeper.ru/forum/viewtopic.php?id=266)
+- Новый параметр Wayfinder: &where=`tv,2,1`
+- TinyMCE поддерживает HTML5(/assets/plugins/tinymce/js/xconfig.js)
+- Автоматически создаются документы 404 и Sitemap.xml
+
+29.06.12
+ - поправлена ошибка транслитерации файлов при загрузке

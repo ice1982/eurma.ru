@@ -1,0 +1,4 @@
+<?php
+global $modx;
+include $modx->config['rb_base_dir'] . "snippets/logooutput/default/template.php";
+?>
